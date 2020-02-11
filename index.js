@@ -1,13 +1,6 @@
-const express = require('express');
+const server = require('./api/server');
 
-const server = express();
-
-server.use(express.json());
-
-server.get('/', (req, res) => {
-  res.send(`<h2>Blog Posts<h2>`);
-});
-
-server.listen(5000, () => {
-  console.log('/n*** Server Running on port 5000 ***\n');
+const port = 5000;
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
