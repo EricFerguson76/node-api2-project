@@ -131,4 +131,27 @@ router.delete('/:id', (req, res) => {
     });
 });
 
+//PUT
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, contents } = req.body;
+
+  if (!title || !contents) {
+    res.status(400).json({
+      errorMessage: 'Please provide title and contents for the post.'
+    });
+  } else {
+    posts
+      .update(req.body)
+      .then(updated => {
+        res.status(200).json(updated);
+      })
+      .catch(() => {
+        res.status(500).json({
+          error: 'The post information could not be modified'
+        });
+      });
+  }
+});
+
 module.exports = router;
