@@ -142,9 +142,22 @@ router.put('/:id', (req, res) => {
     });
   } else {
     posts
-      .update(req.body)
+      .update(id, req.body)
       .then(updated => {
-        res.status(200).json(updated);
+        if (updated) {
+          posts
+            .findById(id)
+            .then(post => {
+              res.status(200).json(post);
+            })
+            .catch(() => {
+              res
+                .status(404)
+                .json({
+                  message: 'The post with the specified ID does not exist.'
+                });
+            });
+        }
       })
       .catch(() => {
         res.status(500).json({
